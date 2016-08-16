@@ -16,7 +16,7 @@ public class JavaMailUtilsTest {
 
     Folder inbox;
     Folder processed;
-    String email="carlosjose.requena@outlook.com";
+    String email="pepito_trueno@outlook.com";
     String password ="$$@2wkAwsswY#4y";
 
     @Test
