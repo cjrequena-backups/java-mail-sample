@@ -16,44 +16,61 @@ public class JavaMailUtilsTest {
 
     Folder inbox;
     Folder processed;
-    String email="pepito_trueno@outlook.com";
-    String password ="$$@2wkAwsswY#4y";
+    static final String EMAIL = "sshubtest2@tuitravel-ad.net";
+    static final String PASSWORD = "Hola1234";
+    static final String MAIL_SMTP_USER = EMAIL;
+    static final String MAIL_SMTP_HOST = "smtp-mail.office365.com";
+    static final String MAIL_SMTP_PORT = "587";
+    static final String MAIL_SMTP_STARTTLS_ENABLE = "true";
+    static final String MAIL_SMTP_AUTH = "true";
+    static final String MAIL_SMTP_SOCKETFACTORY_PORT = "587";
+    static final String MAIL_SMTP_SOCKETFACTORY_CLASS = "javax.net.ssl.SSLSocketFactory";
+    static final String MAIL_SMTP_SOCKETFACTORY_FALLBACK = "true";
+
+    static final String MAIL_IMAPS_SOCKETFACTORY_CLASS = "javax.net.ssl.SSLSocketFactory";
+    static final String MAIL_IMAPS_HOST = "outlook.office365.com";
+    static final String MAIL_IMAPS_PORT = "993";
+    static final String MAIL_IMAPS_SOCKETFACTORY_PORT = "993";
+    static final String MAIL_IMAPS_SOCKETFACTORY_FALLBACK = "false";
+
+
 
     @Test
     public void JavaMailUtilsTest() {
         try {
-
-            // SEND AN EMAIL
+            Session session;
             Properties properties = System.getProperties();
-            properties.put("mail.smtp.user", email);
-            properties.put("mail.smtp.host", "smtp-mail.outlook.com");
-            properties.put("mail.smtp.port", "587");
-            properties.put("mail.smtp.starttls.enable", "true");
-            properties.put("mail.smtp.auth", "true");
-            properties.put("mail.smtp.socketFactory.port", "587");
-            properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-            properties.put("mail.smtp.socketFactory.fallback", "true");
-            Session session = JavaMailUtils.getSession(email, password, properties);
-            JavaMailUtils.sendEmail(session, "no-replay@gmail.com", email, "no-replay@gmail.com", "TEST", "UN BODY TEST");
 
+            // Set manual Properties SMTP
+            properties.setProperty("mail.smtp.user", MAIL_SMTP_USER);
+            properties.setProperty("mail.smtp.host", MAIL_SMTP_HOST);
+            properties.setProperty("mail.smtp.port", MAIL_SMTP_PORT);
+            properties.setProperty("mail.smtp.starttls.enable", MAIL_SMTP_STARTTLS_ENABLE);
+            properties.setProperty("mail.smtp.auth", MAIL_SMTP_AUTH);
+            properties.setProperty("mail.smtp.socketFactory.port", MAIL_SMTP_SOCKETFACTORY_PORT);
+            properties.setProperty("mail.smtp.socketFactory.class", MAIL_SMTP_SOCKETFACTORY_CLASS);
+            properties.setProperty("mail.smtp.socketFactory.fallback", MAIL_SMTP_SOCKETFACTORY_FALLBACK);
+            // Set manual Properties IMAP
+            properties.setProperty("mail.imaps.socketFactory.class", MAIL_IMAPS_SOCKETFACTORY_CLASS);
+            properties.setProperty("mail.imaps.host", MAIL_IMAPS_HOST);
+            properties.setProperty("mail.imaps.port", MAIL_IMAPS_PORT);
+            properties.setProperty("mail.imaps.socketFactory.port", MAIL_IMAPS_SOCKETFACTORY_PORT);
+            properties.setProperty("mail.imaps.socketFactory.fallback", MAIL_IMAPS_SOCKETFACTORY_FALLBACK);
 
-            final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-            // Set manual Properties
-            properties.setProperty("mail.imaps.socketFactory.class", SSL_FACTORY);
-            properties.setProperty("mail.imaps.socketFactory.fallback", "false");
-            properties.setProperty("mail.imaps.port", "993");
-            properties.setProperty("mail.imaps.socketFactory.port", "993");
-            properties.put("mail.imaps.host", "imap-mail.outlook.com");
             /* Create the session  */
-            session = JavaMailUtils.getSession(email, password, properties);
+            session = JavaMailUtils.getSession(EMAIL, PASSWORD, properties);
             Store store = session.getStore("imaps");
             store.connect();
+
+            //JavaMailUtils.sendEmail(session, "no-replay@gmail.com", EMAIL, "no-replay@gmail.com", "TEST", "UN BODY TEST");
 
             /* Open the inbox using store. */
             inbox = store.getFolder("INBOX");
             inbox.open(Folder.READ_WRITE);
 
-            Message messages[] = JavaMailUtils.getAllMessagesFromFolder(inbox, FetchProfile.Item.ENVELOPE, FetchProfile.Item.CONTENT_INFO, FetchProfile.Item.FLAGS, FetchProfile.Item.SIZE);
+            Message messages[] = JavaMailUtils
+                .getAllMessagesFromFolder(inbox, FetchProfile.Item.ENVELOPE, FetchProfile.Item.CONTENT_INFO, FetchProfile.Item.FLAGS,
+                    FetchProfile.Item.SIZE);
             //Message messages[] = JavaMailUtils.getSeenMessagesFromFolder(inbox, FetchProfile.Item.ENVELOPE, FetchProfile.Item.CONTENT_INFO, FetchProfile.Item.FLAGS, FetchProfile.Item.SIZE);
             log.debug("No. of Unread Messages : " + inbox.getUnreadMessageCount());
 
