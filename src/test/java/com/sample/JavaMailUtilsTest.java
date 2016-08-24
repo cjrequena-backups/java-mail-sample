@@ -16,7 +16,7 @@ public class JavaMailUtilsTest {
 
     Folder inbox;
     Folder processed;
-    static final String EMAIL = "sshubtest2@tuitravel-ad.net";
+    static final String EMAIL = "sshubtest1@tuitravel-ad.net";
     static final String PASSWORD = "Hola1234";
     static final String MAIL_SMTP_USER = EMAIL;
     static final String MAIL_SMTP_HOST = "smtp-mail.office365.com";
@@ -74,11 +74,11 @@ public class JavaMailUtilsTest {
             //Message messages[] = JavaMailUtils.getSeenMessagesFromFolder(inbox, FetchProfile.Item.ENVELOPE, FetchProfile.Item.CONTENT_INFO, FetchProfile.Item.FLAGS, FetchProfile.Item.SIZE);
             log.debug("No. of Unread Messages : " + inbox.getUnreadMessageCount());
 
-            /* Open the inbox using store. */
+            /* Open the processed using store. */
             processed = store.getFolder("PROCESSED");
             processed.open(Folder.READ_WRITE);
 
-            /*Copy messges from a folder to another folder*/
+            /*Move messges from a folder to another folder*/
             JavaMailUtils.moveMessages(inbox, processed, messages);
 
             try {
