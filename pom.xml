@@ -22,7 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-version>1.8</java-version>
 
-        <javax.mail.version>1.5.6</javax.mail.version>
+        <javax.mail.version>1.5.5</javax.mail.version>
         <junit.version>4.12</junit.version>
         <lombok.version>1.16.6</lombok.version>
         <!-- Current log4j2 release -->
